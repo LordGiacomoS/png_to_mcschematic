@@ -5,7 +5,6 @@ def hkey_get(hkey, input_, input_type=0, out_type=2):
     # type 0 == rgb
     # type 1 == name
     # type 2 == layer
-    #print(input_)
     layer = hkey[input_type].index(input_)
     if out_type != 2:
         return hkey[out_type][layer]
@@ -20,7 +19,7 @@ def heightmap_to_valmap(mapfile, height_key):
     return pixels, width, height
             
 concrete_rgbs = ((207, 213, 214), (125, 125, 115), (55, 58, 62), (8, 10, 15), (96, 60, 32), (142, 33, 33), (224, 97, 1), (241, 175, 21), (94, 169, 24), (73, 91, 36), (21, 119, 136), (36, 137, 199), (45, 47, 143), (100, 32, 156), (169, 48, 159), (213, 101, 143))
-concrete_names = ("white", "light_gray", "gray", "black", "brown", "red", "orange", "yellow", "lime_green", "green", "cyan", "light_blue", "blue", "purple", "magenta", "pink")
+concrete_names = ("white", "light_gray", "gray", "black", "brown", "red", "orange", "yellow", "lime", "green", "cyan", "light_blue", "blue", "purple", "magenta", "pink")
 
 
 def make_hkey(concrete_names=None): #names go lowest to highest
@@ -54,8 +53,6 @@ def make_hkey(concrete_names=None): #names go lowest to highest
         return (tuple(rgbs), tuple(names))
 
 def set_block(structure, material, coords):
-    #pos = Vector(coords[0], coords[1], coords[2])
-    #structure.fill(Cuboid(pos, pos), material)
     structure.setBlock(coords, material)
     
     
@@ -64,11 +61,11 @@ def generate_layer(structure, height_arr, layer_num, width, height, align_axis, 
     for zpos in range(height):
         for xpos in range(width):    
             if height_arr[(zpos*width)+xpos] >= layer_num:
-                coords = zpos*-1, layer_num, xpos*1 # filter coords based on align axis
+                coords = zpos*-1, layer_num, xpos*1 #[TBA]: filter coords based on align axis
                 set_block(structure, layer_material, coords)
 
 def generate_heightmap_structure(heightmap_png, hkey=None, use_concrete=False, base_material="stone", align_axis="z", outfile="terrain"):
-    # align_axis names axis to align the image y coordinate to
+    #[TBA]: align_axis names axis to align the image y coordinate to
     if hkey == None:
         hkey = make_hkey()
     
